@@ -10,6 +10,32 @@ class _HomeState extends State<Home> {
 
   TextEditingController _controllerAlcool = new TextEditingController();
   TextEditingController _controllerGasolina = new TextEditingController();
+  String _txtResultado = "";
+
+  void _calcular(){
+
+    double? precoAlcool = double.tryParse(_controllerAlcool.text);
+    double? precoGasolina = double.tryParse(_controllerGasolina.text);
+
+    if(precoAlcool == null || precoGasolina == null) {
+      setState(() {
+        _txtResultado = "Entradas inválidas! Verifique-os e tente novamente";
+      });
+    } else {
+
+      double _resultado = precoAlcool / precoGasolina;
+
+      if(_resultado >= 0.7){
+        _txtResultado = "É melhor abastecer com gasolina";
+      } else {
+        _txtResultado = "É melhor abastecer com alcool";
+      }
+
+      setState(() {
+        _txtResultado = "Compre o que você quiser!";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +89,7 @@ class _HomeState extends State<Home> {
             Padding(
              padding: EdgeInsets.only(top: 10),
              child: ElevatedButton(
-               onPressed: (){},
+               onPressed: _calcular,
                child: Text(
                    "Calcular",
                    style: TextStyle(
@@ -75,7 +101,7 @@ class _HomeState extends State<Home> {
               Padding(
                   padding: EdgeInsets.only(top: 20),
                 child: Text(
-                    "Resultado",
+                  _txtResultado,
                 style: TextStyle(
                   fontWeight:  FontWeight.bold,
                   fontSize: 22
