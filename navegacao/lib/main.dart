@@ -9,8 +9,6 @@ void main() {
 }
 
 class TelaPrincipal extends StatefulWidget {
-  const TelaPrincipal({Key? key}) : super(key: key);
-
   @override
   _TelaPrincipalState createState() => _TelaPrincipalState();
 }
@@ -20,29 +18,28 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tela principal"),
-        backgroundColor: Colors.purple,
+        title: Text("Tela Principal"),
+        backgroundColor: Colors.orange,
       ),
       body: Container(
         padding: EdgeInsets.all(32),
         child: Column(
-          children: [
-            ElevatedButton(
+          children: <Widget>[
+            RaisedButton(
               child: Text("Ir para a segunda tela"),
+              padding: EdgeInsets.all(15),
               onPressed: (){
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TelaPrincipal()
-                  )
-                  );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TelaSecundaria(valor: "Maria",)
+                    )
+                );
               },
             )
           ],
         ),
-      )
-
-
+      ),
     );
   }
 }
