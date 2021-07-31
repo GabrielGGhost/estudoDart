@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class BuscaCep extends StatefulWidget {
+  const BuscaCep({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _BuscaCepState createState() => _BuscaCepState();
 }
 
-class _HomeState extends State<Home> {
+class _BuscaCepState extends State<BuscaCep> {
 
   TextEditingController _controllerCep = TextEditingController();
-  String _logradouro = "";
+  String _logradouro = "",
+         _bairro = "",
+         _uf = "",
+         _cidade = "";
 
   _buscarCep() async {
     String cep = _controllerCep.text;
@@ -27,12 +30,12 @@ class _HomeState extends State<Home> {
 
     Map<String, dynamic> retorno = json.decode(response.body);
 
-    String bairro = retorno["bairro"];
-    String uf = retorno["uf"];
-    String cidade = retorno["localidade"];
-
     setState(() {
       _logradouro = retorno["logradouro"];
+      _bairro = retorno["bairro"];
+      _uf = retorno["uf"];
+      _cidade = retorno["localidade"];
+
     });
   }
 
@@ -47,7 +50,11 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.all(40),
         child: Column(
           children: [
-            Text("Rua: ${_logradouro}"),
+            Text("Logradouro: ${_logradouro}\r\n" +
+                "Bairro: ${_bairro}\r\n" +
+                "Cidade: ${_cidade}\r\n" +
+                "UF: ${_uf}\r\n"
+            ),
             TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
