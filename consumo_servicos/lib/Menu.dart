@@ -1,4 +1,5 @@
 import 'package:consumo_servicos/BuscaCep.dart';
+import 'package:consumo_servicos/precoBitcoin.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {
@@ -28,7 +29,16 @@ class _MenuState extends State<Menu> {
                           builder: (context) => BuscaCep())
                   );
                 },
-                child: Text("Busca cep"))
+                child: Text("Busca cep")),
+            ElevatedButton(
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PrecoBitcoin())
+                  );
+                },
+                child: Text("Preço Bitcoin"))
           ],
         ),
       ),
