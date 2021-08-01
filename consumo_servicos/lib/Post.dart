@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Post{
   int? _userId;
   int? _id;
@@ -6,6 +8,26 @@ class Post{
 
   Post.empty(){}
   Post(this._userId, this._id, this._title, this._body);
+
+  toEntityFromJson(){
+    return json.encode(
+        {
+          "userId": this.userId,
+          "id": this.id,
+          "title": this.title,
+          "body": this.body
+        }
+    );
+  }
+
+  Map fromEntityToJson(){
+    return {
+      "userId": this.userId,
+      "id": this.id,
+      "title": this.title,
+      "body": this.body
+    };
+  }
 
   int? get id => _id;
   int? get userId => _userId;

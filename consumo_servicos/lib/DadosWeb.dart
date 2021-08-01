@@ -39,14 +39,9 @@ class _DadosWebState extends State<DadosWeb> {
 
   _post() async{
 
-    var corpo = json.encode(
-      {
-        "userId": 24,
-        "id": null,
-        "title": "One Piece",
-        "body": "Anime do piratinha que estica."
-      }
-    );
+    Post post = new Post(20, null, "One Piece", "Anime do piratinha que estica");
+
+    var corpo = post.fromEntityToJson();
 
     http.Response response = await http.post(
         _urlBase + "/posts",
@@ -61,12 +56,33 @@ class _DadosWebState extends State<DadosWeb> {
 
   }
 
-  _put(){
+  _put() async{
+    var corpo = json.encode(
+        {
+          "userId": 24,
+          "id": null,
+          "title": "One Piece",
+          "body": "Anime do piratinha que estica."
+        }
+    );
 
+    http.Response response = await http.put(
+        _urlBase + "/posts/2",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        },
+        body: corpo
+    );
+
+    print("Resposta: " + response.statusCode.toString());
+    print("Resposta: " + response.body);
   }
 
-  _delete(){
+  _delete() async {
+    http.Response response = await http.delete( _urlBase + "/posts/2");
 
+    print("Resposta: " + response.statusCode.toString());
+    print("Resposta: " + response.body);
   }
 
   @override
@@ -85,10 +101,10 @@ class _DadosWebState extends State<DadosWeb> {
                     onPressed: _post,
                     child: new Text("Salvar")),
                 ElevatedButton(
-                    onPressed: null,
+                    onPressed: _put,
                     child: new Text("Alterar")),
                 ElevatedButton(
-                    onPressed: null,
+                    onPressed: _delete,
                     child: new Text("Deletar")),
               ],
             ),
