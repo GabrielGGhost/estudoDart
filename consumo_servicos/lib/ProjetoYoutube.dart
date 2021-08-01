@@ -1,3 +1,7 @@
+import 'package:consumo_servicos/TelasYoutune/Biblioteca.dart';
+import 'package:consumo_servicos/TelasYoutune/EmAlta.dart';
+import 'package:consumo_servicos/TelasYoutune/Inicio.dart';
+import 'package:consumo_servicos/TelasYoutune/Inscricao.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,8 +13,19 @@ class Youtube extends StatefulWidget {
 }
 
 class _YoutubeState extends State<Youtube> {
+
+  int _indAtual = 0;
+
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> telas = [
+      new Inicio(),
+      new EmAlta(),
+      new Inscricao(),
+      new Biblioteca(),
+    ];
+
     return new Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
@@ -42,8 +57,38 @@ class _YoutubeState extends State<Youtube> {
             ),
           ],
       ),
-      body: new Container(
-
+      body: telas[_indAtual],
+      bottomNavigationBar: new BottomNavigationBar(
+        currentIndex: _indAtual,
+        onTap: (indice){
+          setState(() {
+            _indAtual = indice;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        fixedColor: Colors.red,
+        items: [
+          new BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: "Início",
+              backgroundColor: Colors.orange
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.whatshot),
+            label: "Em alta",
+            backgroundColor: Colors.blue
+          ),
+          new BottomNavigationBarItem(
+              icon: new Icon(Icons.whatshot),
+              label: "Em alta",
+              backgroundColor: Colors.purple
+          ),
+          new BottomNavigationBarItem(
+              icon: new Icon(Icons.whatshot),
+              label: "Em alta",
+              backgroundColor: Colors.green
+          ),
+        ],
       ),
     );
   }
