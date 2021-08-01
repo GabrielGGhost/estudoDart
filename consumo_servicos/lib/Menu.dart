@@ -2,6 +2,7 @@ import 'package:consumo_servicos/AlertList.dart';
 import 'package:consumo_servicos/BuscaCep.dart';
 import 'package:consumo_servicos/DadosWeb.dart';
 import 'package:consumo_servicos/FutereBitcoin.dart';
+import 'package:consumo_servicos/ProjetoYoutube.dart';
 import 'package:consumo_servicos/precoBitcoin.dart';
 import 'package:flutter/material.dart';
 
@@ -69,6 +70,15 @@ class _MenuState extends State<Menu> {
                   );
                 },
                 child: Text("Dados Web")),
+            ElevatedButton(
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Youtube())
+                  );
+                },
+                child: Text("Youtube")),
           ],
         ),
       ),
