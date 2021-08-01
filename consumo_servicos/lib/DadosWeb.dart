@@ -36,6 +36,10 @@ class _DadosWebState extends State<DadosWeb> {
     return valor.toString();
   }
 
+  String _getValueInt(int? valor){
+    return _getValue(valor.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +63,6 @@ class _DadosWebState extends State<DadosWeb> {
 
                 resultado = "Erro ao carregar os dados.\n${snapshot.error.toString()}";
               }else {
-                print("Dados carregados!");
                 return ListView.builder(
                     itemBuilder: (context, index){
 
@@ -67,7 +70,7 @@ class _DadosWebState extends State<DadosWeb> {
                       Post post = lista![index];
 
                       return ListTile(
-                        title: Text(_getValue(post.title)),
+                        title: Text( _getValueInt(post.id) + " - " + _getValue(post.title)),
                         subtitle: Text(_getValue(post.body)),
                       );
                     }
