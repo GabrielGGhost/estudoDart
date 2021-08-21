@@ -1,0 +1,2 @@
+const CHAVE_YOUTUBE_API = "AIzaSyASqDBJEyY0dCOwlH5hrpYnA_MdV70FBxY";
+const ID_CANAL = "";
