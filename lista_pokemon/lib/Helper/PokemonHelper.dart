@@ -66,6 +66,21 @@ class PokemonnHelper{
     return id;
   }
 
+  Future<int> update(Pokemon pokemon) async {
+    var dataBase = await db;
+
+    warn("UPDATING DATA ON " + Tables.POKEMON);
+    int qtd = await dataBase.update(
+        Tables.POKEMON,
+        pokemon.toMap(),
+        where: "id = ?",
+        whereArgs: [pokemon.id]
+
+    );
+    warn("DATA  UPDATED");
+    return qtd;
+  }
+
   findAllPokemon() async{
     var dataBase = await db;
 

@@ -9,6 +9,7 @@ class Pokemon {
   String? registration;
 
   Pokemon(this.name, this.type1, this.type2, this.registration);
+  Pokemon.Edit(this.id, this.name, this.type1, this.type2);
 
   Map toMap(){
 
