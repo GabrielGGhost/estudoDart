@@ -81,7 +81,20 @@ class PokemonnHelper{
     return qtd;
   }
 
-  findAllPokemon() async{
+  delete(String id) async {
+    var dataBase = await db;
+
+    warn("DELETING DATA ON " + Tables.POKEMON);
+    dataBase.delete(
+      Tables.POKEMON,
+      where: "id = ?",
+      whereArgs: [id]
+    );
+
+  }
+
+
+    findAllPokemon() async{
     var dataBase = await db;
 
     warn("SEARCHING ALL POKEMON");

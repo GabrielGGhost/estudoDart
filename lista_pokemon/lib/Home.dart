@@ -26,6 +26,31 @@ class _HomeState extends State<Home> {
     _type2Controler.clear();
   }
 
+  _openDialogDelete(Pokemon pokemon){
+    showDialog(context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Deletar Pokemon?"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Cancelar")
+              ),
+              TextButton(
+                  onPressed: (){
+                    _delete(pokemon.id!);
+                    Navigator.pop(context);
+                  },
+                  child: Text("Confirmar")
+              ),
+            ],
+          );
+        });
+  }
+
   _openDataScreen({Pokemon? pokemonE}){
 
     String buttonText = "";
@@ -108,6 +133,10 @@ class _HomeState extends State<Home> {
 
   }
 
+  _deletePokemon(Pokemon pokemon){
+    _delete(pokemon.id!);
+  }
+
   _insert(String name, String t1, String t2) async {
     Pokemon pokemon = new Pokemon(name, t1, t2, DateTime.now().toString());
     int result = await _db.insert(pokemon);
@@ -121,6 +150,14 @@ class _HomeState extends State<Home> {
     p.type2 = t2;
     int result = await _db.update(p);
     PokemonnHelper.warn("$result dados atualizados!");
+  }
+
+  _delete(String id) async {
+
+    int result = await _db.delete(id);
+
+    PokemonnHelper.warn("$result dados deletados!");
+    _findAllPokemon();
   }
 
   _findAllPokemon() async{
@@ -182,7 +219,9 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              _openDialogDelete(pokemon);
+                            },
                             child: Padding(
                               padding: EdgeInsets.only(right: 0),
                               child: Icon(
