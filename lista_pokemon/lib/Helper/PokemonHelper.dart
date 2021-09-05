@@ -1,4 +1,5 @@
 import 'package:lista_pokemon/Constantes/DataBase/Access.dart';
+import 'package:lista_pokemon/Constantes/DataBase/Columns.dart';
 import 'package:lista_pokemon/Constantes/DataBase/Tables.dart';
 import 'package:lista_pokemon/Entity/Pokemon.dart';
 import 'package:lista_pokemon/Utilites/Print.dart';
@@ -26,7 +27,7 @@ class PokemonnHelper{
   }
 
   initDB() async{
-    Print.warnMessage("INITIALIZATING DB");
+    warn("INITIALIZATING DB");
 
     final dbPath = await getDatabasesPath();
     final dbLocal = join(dbPath, Access.DB_NAME);
@@ -41,27 +42,48 @@ class PokemonnHelper{
   }
 
   _onCreate(Database db, int version) async {
-    Print.warnMessage("CREATING TABLE");
+    warn("CREATING TABLE");
 
     String sql = "CREATE TABLE " + Tables.POKEMON + " (" +
-        " " + Tables.ID    + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-        " " + Tables.NAME  + " VARCHAR, "  +
-        " " + Tables.TYPE1 + " VARCHAR, " +
-        " " + Tables.TYPE2 + " VARCHAR, " +
-        " " + Tables.REGISTRATION + " DATETIME)";
+        " " + Columns.ID    + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+        " " + Columns.NAME  + " VARCHAR, "  +
+        " " + Columns.TYPE1 + " VARCHAR, " +
+        " " + Columns.TYPE2 + " VARCHAR, " +
+        " " + Columns.REGISTRATION + " DATETIME)";
     await db.execute(sql);
-    Print.warnMessage("TABLE CREATED");
+    warn("TABLE CREATED");
   }
 
   Future<int> insert(Pokemon pokemon) async {
     var dataBase = await db;
 
-    Print.warnMessage("INSERTING DATA INTO " + Tables.POKEMON);
+    warn("INSERTING DATA INTO " + Tables.POKEMON);
     int id = await dataBase.insert(
         Tables.POKEMON,
         pokemon.toMap()
     );
-    Print.warnMessage("DATA INSERTED SUCCESSFULLY");
+    warn("DATA INSERTED SUCCESSFULLY");
     return id;
+  }
+
+  findAllPokemon() async{
+    var dataBase = await db;
+
+    warn("SEARCHING ALL POKEMON");
+
+    String sql = "SELECT * FROM " + Tables.POKEMON;
+    List pokemon = [];
+
+    if(dataBase != null){
+      pokemon = await dataBase.rawQuery(sql);
+    }
+
+    warn("RETURNING ALL ${pokemon.length} POKEMON FOUND");
+    return pokemon;
+  }
+
+
+  static warn(String msg){
+    Print.warnMessage(msg);
   }
 }
