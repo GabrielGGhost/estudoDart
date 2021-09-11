@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_whatsapp/Constants/Images.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'Util/Utils.dart';
 import 'Register.dart';
 import 'Styles/ButtonStyles.dart';
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      hintText: "E-mail",
+                      hintText: AppLocalizations.of(context)!.email,
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -53,12 +53,11 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 8),
                   child: TextField(
-                    autofocus: true,
                     keyboardType: TextInputType.visiblePassword,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                        hintText: "Senha",
+                        hintText: AppLocalizations.of(context)!.senha,
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -72,7 +71,7 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     style: loginButton,
                     child: Text(
-                      "Entrar",
+                      AppLocalizations.of(context)!.entrar,
                       style: (
                         TextStyle(
                           color: Colors.white, fontSize: 20
@@ -87,7 +86,7 @@ class _LoginState extends State<Login> {
                 Center(
                   child: GestureDetector(
                     child: Text(
-                      "Não possui uma conta? Cadastre-se!",
+                      AppLocalizations.of(context)!.naoPossuiContaCadastrese,
                       style: TextStyle(
                         color: Colors.white
                       ),
