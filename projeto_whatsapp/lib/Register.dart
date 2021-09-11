@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'Constants/Images.dart';
+import 'Entity/eUser.dart';
 import 'Styles/ButtonStyles.dart';
 import 'Util/Utils.dart';
 
@@ -124,6 +124,10 @@ class _RegisterState extends State<Register> {
     return Utils.getPhoto(imageName, ext);
   }
 
+  void showToast(String message, [color]){
+    Utils.showToast(message, color);
+  }
+
   void _checkFields() {
     String name = _nameController.text;
     String email = _emailController.text;
@@ -131,12 +135,17 @@ class _RegisterState extends State<Register> {
     bool sucess = false;
     if(name.isNotEmpty){
       if (email.isNotEmpty && email.contains("@")) {
-        if(password.isNotEmpty && password.length >= 5) {
-          _message = AppLocalizations.of(context)!.usuarioCadastradoComSucesso;
+        if(password.isNotEmpty && password.length > 6) {
           sucess = true;
 
+          eUser user = eUser();
+          user.name = name;
+          user.email = email;
+          user.password = password;
+
+          _cadastrarUsuario(user);
         } else {
-          _message = AppLocalizations.of(context)!.senhaDeveTerAoMenos5Caracteres;
+          _message = AppLocalizations.of(context)!.senhaDeveTerAoMenos7Caracteres;
         }
       } else {
         _message =  AppLocalizations.of(context)!.emailValidoNecessario;
@@ -146,23 +155,31 @@ class _RegisterState extends State<Register> {
     }
 
     if(_message != ""){
+      var color;
 
       if(sucess){
-        Fluttertoast.cancel();
-        Fluttertoast.showToast(
-            msg: _message,
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.green
-        );
+       color = Colors.green;
       } else {
-        Fluttertoast.cancel();
-        Fluttertoast.showToast(
-            msg: _message,
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.redAccent
-        );
+        color = Colors.redAccent;
       }
+
+      showToast(_message, color);
     }
     _message = "";
+  }
+
+  void _cadastrarUsuario(eUser user) {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    auth.createUserWithEmailAndPassword(
+        email: user.email,
+        password: user.password
+    ).then((fireBaseUser){
+      showToast(AppLocalizations.of(context)!.usuarioCadastradoComSucesso, Colors.green);
+      Navigator.pop(context);
+    }).catchError((error){
+      Utils.showAuthError(error.code, context);
+    });
   }
 }

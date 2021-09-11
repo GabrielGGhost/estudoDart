@@ -12,6 +12,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( //Define um container para os componentes
@@ -37,6 +41,7 @@ class _LoginState extends State<Login> {
                     padding: EdgeInsets.only(bottom: 8),
                   child: TextField(
                     autofocus: true,
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
@@ -54,6 +59,7 @@ class _LoginState extends State<Login> {
                   padding: EdgeInsets.only(bottom: 8),
                   child: TextField(
                     keyboardType: TextInputType.visiblePassword,
+                    controller: _passwordController,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
