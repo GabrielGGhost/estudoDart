@@ -1,9 +1,7 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:projeto_whatsapp/Login.dart';
 import 'package:projeto_whatsapp/Register.dart';
-
+import 'Constants/Routes.dart';
 import 'Home.dart';
 import 'Util/Utils.dart';
 
@@ -12,16 +10,16 @@ class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings set){
 
     switch(set.name){
-      case "/":
-      case "/login":
+      case Routes.INITIAL_ROUTE:
+      case Routes.LOGIN:
         return MaterialPageRoute(
             builder: (_) => Login()
         );
-      case "/cadastro" :
+      case Routes.REGISTER :
         return MaterialPageRoute(
             builder: (_) => Register()
         );
-      case "/home" :
+      case Routes.HOME :
         return MaterialPageRoute(
             builder: (_) => Home()
         );
@@ -31,6 +29,6 @@ class RouteGenerator {
   }
 
   static void _routeNotFound() {
-    Utils.showDialogBox("Tela não encontrada", context);
+    Utils.showToast("Erro ao acessar a tela", Colors.redAccent);
   }
 }

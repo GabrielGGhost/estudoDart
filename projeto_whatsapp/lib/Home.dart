@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_whatsapp/Chamadas.dart';
+import 'package:projeto_whatsapp/Constants/Routes.dart';
 import 'package:projeto_whatsapp/Contatos.dart';
 import 'package:projeto_whatsapp/Conversas.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Status.dart';
 import 'Constants/Menu.dart';
-import 'Login.dart';
 import 'Util/Utils.dart';
 
 class Home extends StatefulWidget {
@@ -19,8 +19,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController? _tabController;
-
-
 
   @override
   void initState() {
@@ -42,17 +40,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  void _unlogUser() async {
+  _unlogUser() async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.signOut();
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Login()
-        )
-    );
+    Navigator.pushReplacementNamed(context, Routes.LOGIN);
   }
 
 
@@ -88,14 +81,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               icon: Icon(Icons.camera_alt),
             ),
             Tab(
-              text: "CONVERSAS",
-
+              text: AppLocalizations.of(context)!.conversas.toString().toUpperCase(),
             ),
             Tab(
-              text: "STATUS",
+              text: AppLocalizations.of(context)!.conversas.toString().toUpperCase(),
             ),
             Tab(
-              text: "CHAMADAS",
+              text: AppLocalizations.of(context)!.chamadas.toString().toUpperCase(),
             ),
           ],
         ),

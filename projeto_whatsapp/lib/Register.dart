@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Constants/DbData.dart';
+import 'Constants/Routes.dart';
 import 'Entity/eUser.dart';
 import 'Styles/ButtonStyles.dart';
 import 'Util/Utils.dart';
@@ -188,7 +189,7 @@ class _RegisterState extends State<Register> {
         );
 
       showToast(AppLocalizations.of(context)!.usuarioCadastradoComSucesso, Colors.green);
-      Navigator.pop(context);
+      Navigator.pushNamedAndRemoveUntil(context, Routes.LOGIN, (_) => false);
     }).catchError((error){
       Utils.showAuthError(error.code, context);
     });

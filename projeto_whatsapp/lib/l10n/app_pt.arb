@@ -7,8 +7,10 @@
     "cadastrarSe" : "Cadastrar-se",
     "cadastroNaoEncontrado" : "Cadastro não encontrado",
     "cadastroDesativado" : "Cadastro desativado",
+    "chamadas" : "Chamadas",
     "contatos" : "Contatos",
     "configuracoes" : "Configurações",
+    "conversas" : "Conversas",
 
 
     "email" : "E-mail",
@@ -37,11 +39,14 @@
     "pagamentos" : "Pagamentos",
 
 
+    "rotaNaoEncontrada" : "Rota não encontrada",
+
+
     "sair" : "Sair",
     "senha" : "Senha",
     "senhaInvalida" : "Senha inválida",
     "senhaDeveTerAoMenos7Caracteres" : "A senha deve ter ao menos 7 caracteres!",
-
+    "status": "Status",
 
     "usuarioCadastradoComSucesso" : "Usuário cadastrado com sucesso!",
 

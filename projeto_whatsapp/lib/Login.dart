@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'Constants/Routes.dart';
 import 'Entity/eUser.dart';
 import 'Home.dart';
 import 'Util/Utils.dart';
@@ -42,7 +43,6 @@ class _LoginState extends State<Login> {
   void initState() {
     checkSignedUser();
     super.initState();
-
   }
 
   @override
@@ -130,12 +130,7 @@ class _LoginState extends State<Login> {
                     onTap: (){
                       _emailController.text = "";
                       _passwordController.text = "";
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Register()
-                          )
-                      );
+                      Navigator.pushNamed(context, Routes.REGISTER);
                     },
                   ),
                 )
@@ -199,11 +194,7 @@ class _LoginState extends State<Login> {
         email: user.email,
         password: user.password
     ).then((value){
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home()
-      ));
+      Navigator.pushReplacementNamed(context, Routes.HOME);
     }).catchError((error){
       Utils.showAuthError(error.code, context);
     });
