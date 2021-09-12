@@ -1,18 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_whatsapp/Entity/eChat.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:projeto_whatsapp/Login.dart';
 
 import 'Constants/Menu.dart';
+import 'Util/Utils.dart';
 
 class Contatos extends StatefulWidget {
   const Contatos({Key? key}) : super(key: key);
 
   @override
   _ContatosState createState() => _ContatosState();
-}
-
-_menuChoice(itemChoice){
-
 }
 
 class _ContatosState extends State<Contatos> {
@@ -44,6 +43,28 @@ class _ContatosState extends State<Contatos> {
         "20/05/2021"
     ),
   ];
+
+  _menuChoice(itemChoice){
+    switch(itemChoice){
+      case Menu.SAIR:
+        _unlogUser();
+        break;
+    }
+  }
+
+  void _unlogUser() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Login()
+        )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +80,7 @@ class _ContatosState extends State<Contatos> {
           PopupMenuButton(
             onSelected: _menuChoice,
             itemBuilder: (context){
-              return Menu.items.map((String item) {
+              return Utils.getItensPopUpMenu(context)!.map((String item) {
                 return PopupMenuItem(
                     value: item,
                     child: Text(item)

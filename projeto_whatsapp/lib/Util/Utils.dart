@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projeto_whatsapp/Constants/ErrorCodes.dart';
 import 'package:projeto_whatsapp/Constants/Images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:projeto_whatsapp/Constants/Menu.dart';
 import 'package:projeto_whatsapp/Styles/ButtonStyles.dart';
 
 class Utils{
@@ -106,4 +108,18 @@ class Utils{
           );
         });
   }
+
+  static List<String>? getItensPopUpMenu(context){
+    return [
+      Menu.NOVO_GRUPO,
+      Menu.NOVA_TRANSMISSAO,
+      Menu.APARELHOS_CONECTADOS,
+      Menu.MENSAGENS_FAVORITAS,
+      Menu.PAGAMENTOS,
+      Menu.CONFIGURACOES,
+      Menu.SAIR
+    ];
+  }
+
+
 }

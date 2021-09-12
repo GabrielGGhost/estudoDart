@@ -5,8 +5,9 @@ import 'package:projeto_whatsapp/Contatos.dart';
 import 'package:projeto_whatsapp/Conversas.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Status.dart';
-
 import 'Constants/Menu.dart';
+import 'Login.dart';
+import 'Util/Utils.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -32,9 +33,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  _menuChoice(itemChoice){
+  _menuChoice(itemChoice) {
+    switch(itemChoice){
+      case Menu.SAIR:
+        _unlogUser();
 
+        break;
+    }
   }
+
+  void _unlogUser() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Login()
+        )
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +71,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           PopupMenuButton(
               onSelected: _menuChoice,
               itemBuilder: (context){
-                return Menu.items.map((String item) {
+                return Utils.getItensPopUpMenu(context)!.map((String item) {
                   return PopupMenuItem(
                   value: item,
                   child: Text(item)
