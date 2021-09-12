@@ -5,6 +5,8 @@
     "cadastrarSe" : "Cadastrar-se",
     "cadastroNaoEncontrado" : "Cadastro não encontrado",
     "cadastroDesativado" : "Cadastro desativado",
+    "contatos" : "Contatos",
+
 
     "email" : "E-mail",
     "emailInvalido" : "E-mail inválido",
@@ -27,5 +29,9 @@
     "senhaInvalida" : "Senha inválida",
     "senhaDeveTerAoMenos7Caracteres" : "A senha deve ter ao menos 7 caracteres!",
 
-    "usuarioCadastradoComSucesso" : "Usuário cadastrado com sucesso!"
+
+    "usuarioCadastradoComSucesso" : "Usuário cadastrado com sucesso!",
+
+
+    "whatsApp" : "WhatsApp"
 }
