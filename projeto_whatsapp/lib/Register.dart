@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:projeto_whatsapp/Constants/DbData.dart';
 import 'Entity/eUser.dart';
 import 'Styles/ButtonStyles.dart';
 import 'Util/Utils.dart';
@@ -143,7 +145,7 @@ class _RegisterState extends State<Register> {
           user.email = email;
           user.password = password;
 
-          _cadastrarUsuario(user);
+          _registerUser(user);
         } else {
           _message = AppLocalizations.of(context)!.senhaDeveTerAoMenos7Caracteres;
         }
@@ -162,13 +164,12 @@ class _RegisterState extends State<Register> {
       } else {
         color = Colors.redAccent;
       }
-
       showToast(_message, color);
     }
     _message = "";
   }
 
-  void _cadastrarUsuario(eUser user) {
+  void _registerUser(eUser user) {
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -176,6 +177,16 @@ class _RegisterState extends State<Register> {
         email: user.email,
         password: user.password
     ).then((fireBaseUser){
+
+      //Salvar dados do usuário
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      
+      db.collection(DbData.TABLE_USER)
+        .doc(fireBaseUser.user!.uid)
+        .set(
+          user.toMap()
+        );
+
       showToast(AppLocalizations.of(context)!.usuarioCadastradoComSucesso, Colors.green);
       Navigator.pop(context);
     }).catchError((error){

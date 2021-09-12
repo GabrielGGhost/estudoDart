@@ -7,3 +7,4 @@ final ButtonStyle loginButton = TextButton.styleFrom(
     borderRadius: BorderRadius.circular(32)
   )
 );
+

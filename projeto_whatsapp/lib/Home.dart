@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,8 +9,38 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  TabController? _tabController;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Whatsapp"),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(
+              text: "conversas",
+            ),
+            Tab(
+              text: "contatos",
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+
+        ],
+      ),
+    );
+  }
+
+
+  _getUserData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = await auth.currentUser;
   }
 }

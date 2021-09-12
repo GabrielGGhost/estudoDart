@@ -20,6 +20,8 @@
     "nome" : "Nome",
     "nomeNecessarioParaCadastro" : "O nome é necessário para o cadastro",
 
+    "ok" : "Ok",
+
 
     "senha" : "Senha",
     "senhaInvalida" : "Senha inválida",

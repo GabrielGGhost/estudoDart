@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projeto_whatsapp/Constants/ErrorCodes.dart';
 import 'package:projeto_whatsapp/Constants/Images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:projeto_whatsapp/Styles/ButtonStyles.dart';
 
 class Utils{
 
@@ -79,5 +80,30 @@ class Utils{
     }
 
     showToast(errorMessage, Colors.redAccent);
+  }
+
+  static void showDialogBox(String message, context) {
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text(
+                message,
+                style: TextStyle(
+                  fontSize: 16
+                ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(AppLocalizations.of(context)!.ok,)
+              )
+            ],
+          );
+        });
   }
 }
