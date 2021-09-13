@@ -4,6 +4,7 @@ import 'package:projeto_whatsapp/Register.dart';
 import 'Configurations.dart';
 import 'Constants/Routes.dart';
 import 'Home.dart';
+import 'Perfil.dart';
 import 'Util/Utils.dart';
 
 class RouteGenerator {
@@ -27,6 +28,10 @@ class RouteGenerator {
       case Routes.CONFIGURATIONS :
         return MaterialPageRoute(
             builder: (_) => Configurations()
+        );
+      case Routes.PERFIL :
+        return MaterialPageRoute(
+            builder: (_) => Perfil()
         );
       default :
         _routeNotFound();

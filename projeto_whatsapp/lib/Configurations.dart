@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'Constants/Routes.dart';
 import 'Constants/cConfigurations.dart';
 import 'Styles/IconsStyles.dart';
 
@@ -78,6 +79,11 @@ class _ConfigurationsState extends State<Configurations> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CircleAvatar(
+                          child: GestureDetector (
+                            onTap: (){
+                              Navigator.pushNamed(context, Routes.PERFIL);
+                            },
+                          ),
                           maxRadius: 35,
                           backgroundColor: Colors.grey,
                           backgroundImage: NetworkImage(pathPiture),
@@ -154,9 +160,9 @@ class _ConfigurationsState extends State<Configurations> {
                               title: Text(centerOptions[index]["name"]!),
                               subtitle: Text(centerOptions[index]["description"]!),
                               horizontalTitleGap: 10,
-
-                              onLongPress: (){},
-                              onTap: (){},
+                              onTap: (){
+                                _getCentralEvent(index);
+                              },
                             ),
                           );
                         }),
@@ -228,4 +234,6 @@ class _ConfigurationsState extends State<Configurations> {
   _getBottomIcon(int index) {
     return (index == 0 ? PEOPLE_ICON : PEOPLE_ICON);
   }
+
+  void _getCentralEvent(int index) {}
 }

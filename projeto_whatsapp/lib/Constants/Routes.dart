@@ -6,5 +6,5 @@ class Routes {
   static const REGISTER = INITIAL_ROUTE + "register";
   static const HOME = INITIAL_ROUTE + "home";
   static const CONFIGURATIONS = INITIAL_ROUTE + "configurations";
-
+  static const PERFIL = INITIAL_ROUTE + "perfil";
 }

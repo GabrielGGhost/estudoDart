@@ -8,3 +8,12 @@ final ButtonStyle loginButton = TextButton.styleFrom(
   )
 );
 
+final ButtonStyle CameraButton = TextButton.styleFrom(
+    backgroundColor: Colors.green,
+    padding: EdgeInsets.all(25),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(60)
+    )
+);
+
+

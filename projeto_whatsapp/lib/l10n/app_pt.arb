@@ -8,6 +8,7 @@
     "cadastrarSe" : "Cadastrar-se",
     "cadastroNaoEncontrado" : "Cadastro não encontrado",
     "cadastroDesativado" : "Cadastro desativado",
+    "camera" : "Câmera",
     "centralDeAjudaFaleConoscoPoliticaDePrivacidade" : "Central de ajuda, fale conosco, política de privacidade",
     "chamadas" : "Chamadas",
     "conta" : "Conta",
@@ -24,6 +25,7 @@
     "entrar" : "Entrar",
     "erroDesconhecido" : "Erro desconhecido",
     "erroNoServidorTenteNovamenteMaisTarde" : "Erro no servidor. Tente Novamente Mais Tarde",
+    "esseNaoESeuNome" : "Esse não é seu nome de usuário nem seu PIN. Esse nome será visível para seus contatos do WhatApp",
     "excessoTentativas" : "Excesso de tentativas. Tente novamente mais tarde",
 
 
@@ -42,6 +44,7 @@
 
 
     "pagamentos" : "Pagamentos",
+    "perfil": "Perfil",
     "privacidadeContaMudarNumero" : "Privacidade, segurança, mudar número",
 
 
