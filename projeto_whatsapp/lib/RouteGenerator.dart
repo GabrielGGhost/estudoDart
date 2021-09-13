@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_whatsapp/Login.dart';
 import 'package:projeto_whatsapp/Register.dart';
+import 'Configurations.dart';
 import 'Constants/Routes.dart';
 import 'Home.dart';
 import 'Util/Utils.dart';
@@ -22,6 +23,10 @@ class RouteGenerator {
       case Routes.HOME :
         return MaterialPageRoute(
             builder: (_) => Home()
+        );
+      case Routes.CONFIGURATIONS :
+        return MaterialPageRoute(
+            builder: (_) => Configurations()
         );
       default :
         _routeNotFound();

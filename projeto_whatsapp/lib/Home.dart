@@ -33,6 +33,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   _menuChoice(itemChoice) {
     switch(itemChoice){
+      case Menu.CONFIGURACOES:
+        Navigator.pushNamed(context, Routes.CONFIGURATIONS);
+
+        break;
       case Menu.SAIR:
         _unlogUser();
 
@@ -79,12 +83,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           tabs: [
             Tab(
               icon: Icon(Icons.camera_alt),
+
             ),
             Tab(
               text: AppLocalizations.of(context)!.conversas.toString().toUpperCase(),
             ),
             Tab(
-              text: AppLocalizations.of(context)!.conversas.toString().toUpperCase(),
+              text: AppLocalizations.of(context)!.status.toString().toUpperCase(),
             ),
             Tab(
               text: AppLocalizations.of(context)!.chamadas.toString().toUpperCase(),

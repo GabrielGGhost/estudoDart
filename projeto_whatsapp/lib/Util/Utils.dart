@@ -5,7 +5,6 @@ import 'package:projeto_whatsapp/Constants/ErrorCodes.dart';
 import 'package:projeto_whatsapp/Constants/Images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Constants/Menu.dart';
-import 'package:projeto_whatsapp/Styles/ButtonStyles.dart';
 
 class Utils{
 
