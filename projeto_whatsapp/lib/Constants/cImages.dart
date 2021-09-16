@@ -1,6 +1,8 @@
-class Images {
+class cImages {
 
   static const IMAGE_PATH = "assets/images/";
+
+  static const STORAGE_PATH = "perfil";
 
 
   //Tipos de ext de fotos

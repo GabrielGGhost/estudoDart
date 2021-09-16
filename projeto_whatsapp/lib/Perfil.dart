@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:projeto_whatsapp/Entity/eUser.dart';
+import 'package:projeto_whatsapp/Util/Utils.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'Constants/Routes.dart';
 import 'Styles/ButtonStyles.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:projeto_whatsapp/Constants/cImages.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -13,41 +19,50 @@ class Perfil extends StatefulWidget {
 
 class _PerfilState extends State<Perfil> {
 
-  String pathPiture = "https://firebasestorage.googleapis.com/v0/b/whatsapp-9d115.appspot.com/o/perfil%2Fperfil2.jpg?alt=media&token=f39cf87e-649a-4fb0-9a65-e7c508e98f10";
+  TextEditingController _nameController = TextEditingController();
 
-  Map<String, dynamic> user = {
-    "name": "Gabriel Santos",
-    "status" : "Teste"
-  };
+  XFile? image;
+  User? userLogged;
+  eUser? user = eUser();
+  bool _uploadingImage = false;
+  @override
+  void initState() {
+    super.initState();
+
+    user = user!.getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.perfil),
       ),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Center(
-            child: Column(
-              children: [
-                Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      CircleAvatar(
-                        child: GestureDetector (
-                          onTap: (){
-                            Navigator.pushNamed(context, Routes.PERFIL);
-                          },
+      body: SingleChildScrollView(
+        child: Container(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Center(
+              child: Column(
+                children: [
+                  Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        CircleAvatar(
+                          child: GestureDetector (
+                            onTap: (){
+                              Navigator.pushNamed(context, Routes.PERFIL);
+                            },
+                          ),
+                          maxRadius: 100,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: user!.urlPerfilPicture != "" ? NetworkImage(user!.urlPerfilPicture) : null,
                         ),
-                        maxRadius: 100,
-                        backgroundColor: Colors.grey,
-                        backgroundImage: NetworkImage(pathPiture),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 120),
-                          child: ElevatedButton(
+                        Padding(
+                            padding: EdgeInsets.only(left: 120),
+                            child: ElevatedButton(
                               onPressed: () => {
                                 _showPhotoSourceMenu()
                               },
@@ -56,84 +71,100 @@ class _PerfilState extends State<Perfil> {
                                 size: 25,
                               ),
                               style: CameraButton,
-                          )
-                      ),
-                    ]
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15, 65, 15, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 15),
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.green,
-                                  size: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            )
+                        ),
+                      ]
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 65, 15, 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _uploadingImage ? CircularProgressIndicator() : Container()
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Text(
-                                    "Nome",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                    ),
+                                  padding: EdgeInsets.only(right: 15),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.green,
+                                    size: 25,
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Text(
-                                    user["name"].toString().split(" ")[0],
-                                      style: TextStyle(
-                                        fontSize: 16
-                                      ),
-                                  ),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.esseNaoESeuNome,
-                                    style: TextStyle(
-                                      color: Colors.grey
-                                    ),
-                                  ),
                               ],
                             ),
-                          ),
-                          Column(
-                            children: [
-                              Icon(
-                                Icons.create_rounded,
-                                size: 25,
-                                color: Colors.grey,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Text(
+                                      "Nome",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Text(
+                                      //user["name"].toString().split(" ")[0],
+                                      "SEM NOME",
+                                      style: TextStyle(
+                                          fontSize: 16
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!.esseNaoESeuNome,
+                                    style: TextStyle(
+                                        color: Colors.grey
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                            ),
+                            Column(
+                              children: [
+                                IconButton(
+                                  onPressed: (){
+                                    _openDialogNameChange();
+                                  },
+                                  icon: Icon(
+                                    Icons.create_rounded,
+                                    size: 25,
+                                    color: Colors.grey,
+                                  ),)
+
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
       ),
+
+
     );
   }
 
@@ -154,19 +185,134 @@ class _PerfilState extends State<Perfil> {
             ),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                  },
                   child: Text("Remover Foto")
               ),
               TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _getPhoto(2);
+                    Navigator.pop(context);
+                  },
                   child: Text("Galeria")
               ),
               TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _getPhoto(1);
+                  },
                   child: Text(AppLocalizations.of(context)!.camera)
               )
             ],
           );
         });
+  }
+
+  void _openDialogNameChange() {
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text(
+              "Escolher nome",
+              style: TextStyle(
+                  fontSize: 16
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  autofocus: true,
+                  controller: _nameController,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(fontSize: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      hintText: "Nome",
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32)
+                      )
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Cancelar")
+              ),
+              TextButton(
+                  onPressed: () {
+
+                  },
+                  child: Text("Salvar",)
+              )
+            ],
+          );
+        });
+
+  }
+
+  _getPhoto(int src) async {
+
+    ImagePicker _picker = ImagePicker();
+    XFile? _selectedImage;
+    switch(src){
+      case 1:
+        _selectedImage = await _picker.pickImage(source: ImageSource.camera);
+        break;
+      case 2:
+        _selectedImage = await _picker.pickImage(source: ImageSource.gallery);
+        break;
+    }
+
+    setState(() {
+      image = _selectedImage;
+      if(image != null){
+        setState(() {
+          _uploadingImage = true;
+        });
+        _uploadImage();
+      }
+    });
+  }
+
+  void _uploadImage() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    FirebaseStorage store = FirebaseStorage.instance;
+    Reference root = store.ref();
+    Reference file = root.child(cImages.STORAGE_PATH)
+                         .child("${user!.id}.jpg");
+
+    UploadTask task = file.putFile(File(image!.path));
+
+    task.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
+
+      switch(taskSnapshot.state){
+        case TaskState.running:
+
+          break;
+        case TaskState.success:
+          _recuperarUrlImagem(taskSnapshot);
+          break;
+
+      }
+    });
+
+  }
+
+  Future _recuperarUrlImagem(TaskSnapshot taskSnapshot) async {
+
+    String url = await taskSnapshot.ref.getDownloadURL();
+
+    setState(() {
+      _uploadingImage = false;
+      user!.urlPerfilPicture = url;
+    });
+
   }
 }

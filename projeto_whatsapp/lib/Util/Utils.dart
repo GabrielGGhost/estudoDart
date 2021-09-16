@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projeto_whatsapp/Constants/ErrorCodes.dart';
-import 'package:projeto_whatsapp/Constants/Images.dart';
+import 'package:projeto_whatsapp/Constants/cImages.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Constants/Menu.dart';
 
@@ -16,9 +16,9 @@ class Utils{
   * */
   static String getPhoto(String imageName, [String? ext]){
     if(ext != null){
-      return Images.IMAGE_PATH + imageName + "." + ext;
+      return cImages.IMAGE_PATH + imageName + "." + ext;
     } else {
-      return Images.IMAGE_PATH + imageName + "." + Images.TYPE_PNG;
+      return cImages.IMAGE_PATH + imageName + "." + cImages.TYPE_PNG;
     }
   }
 
