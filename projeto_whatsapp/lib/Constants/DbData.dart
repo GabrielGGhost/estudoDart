@@ -2,7 +2,7 @@ class DbData {
 
   //Tabela User
   static const TABLE_USER = "user";
-
+      static const COLUMN_URL_PICTURE = "urlPicture";
 
 
   //Gerais

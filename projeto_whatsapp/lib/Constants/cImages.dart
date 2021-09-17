@@ -7,4 +7,5 @@ class cImages {
 
   //Tipos de ext de fotos
   static const TYPE_PNG = "png";
+  static const TYPE_JPG = "jpg";
 }

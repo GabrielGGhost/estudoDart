@@ -120,5 +120,8 @@ class Utils{
     ];
   }
 
+  static bool isNull(String str){
+    return str == null || str == "";
+  }
 
 }

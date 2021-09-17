@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Entity/eUser.dart';
@@ -9,6 +10,7 @@ import 'Styles/ButtonStyles.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projeto_whatsapp/Constants/cImages.dart';
+import 'package:projeto_whatsapp/Constants/DbData.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -23,18 +25,21 @@ class _PerfilState extends State<Perfil> {
 
   XFile? image;
   User? userLogged;
-  eUser? user = eUser();
   bool _uploadingImage = false;
+
+  String? _idUser;
+  String? _name = "";
+  String? _pathPicture = "";
+
   @override
   void initState() {
     super.initState();
 
-    user = user!.getUser();
+    _recuperarDadosUsuario();
   }
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       appBar: AppBar(
@@ -56,10 +61,12 @@ class _PerfilState extends State<Perfil> {
                               Navigator.pushNamed(context, Routes.PERFIL);
                             },
                           ),
-                          maxRadius: 100,
-                          backgroundColor: Colors.grey,
-                          backgroundImage: user!.urlPerfilPicture != "" ? NetworkImage(user!.urlPerfilPicture) : null,
-                        ),
+                            maxRadius: 100,
+                            backgroundColor: Colors.grey,
+                            backgroundImage:
+                            _pathPicture != ""
+                                ? NetworkImage(_pathPicture!)
+                                : null                        ),
                         Padding(
                             padding: EdgeInsets.only(left: 120),
                             child: ElevatedButton(
@@ -120,7 +127,7 @@ class _PerfilState extends State<Perfil> {
                                     padding: EdgeInsets.only(bottom: 5),
                                     child: Text(
                                       //user["name"].toString().split(" ")[0],
-                                      "SEM NOME",
+                                      _name!,
                                       style: TextStyle(
                                           fontSize: 16
                                       ),
@@ -246,7 +253,7 @@ class _PerfilState extends State<Perfil> {
               ),
               TextButton(
                   onPressed: () {
-
+                    _changeName();
                   },
                   child: Text("Salvar",)
               )
@@ -286,7 +293,7 @@ class _PerfilState extends State<Perfil> {
     FirebaseStorage store = FirebaseStorage.instance;
     Reference root = store.ref();
     Reference file = root.child(cImages.STORAGE_PATH)
-                         .child("${user!.id}.jpg");
+                         .child("${_idUser}." + cImages.TYPE_JPG);
 
     UploadTask task = file.putFile(File(image!.path));
 
@@ -311,8 +318,80 @@ class _PerfilState extends State<Perfil> {
 
     setState(() {
       _uploadingImage = false;
-      user!.urlPerfilPicture = url;
+      //user!.urlPerfilPicture = url;
+    });
+    _updateDbUserData(url);
+  }
+
+  void _updateDbUserData(String url) {
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    Map<String, dynamic> data = {
+      DbData.COLUMN_URL_PICTURE : url
+    };
+
+    db.collection(DbData.TABLE_USER)
+      .doc(_idUser)
+      .update(data);
+  }
+
+  _recuperarDadosUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? usuarioLogado = await auth.currentUser;
+    _idUser = usuarioLogado!.uid;
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    DocumentSnapshot snapshot = await db.collection(DbData.TABLE_USER)
+                                        .doc( _idUser )
+                                        .get();
+
+    var data =  snapshot.data() as Map;
+
+    setState(() {
+      _name = _getColumn(DbData.COLUMN_NAME, data);
+      _pathPicture = _getColumn(DbData.COLUMN_URL_PICTURE, data);
+      _nameController.text = _name!;
     });
 
+  }
+
+  isNull(String str) {
+    return Utils.isNull(str);
+  }
+
+  _getColumn(String str, Map data){
+    return !isNull(data[str]) ? data[str] : "";
+  }
+
+  void _changeName() {
+
+    bool success = false;
+    String name = _nameController.text;
+    if(name.length == 0){
+      Utils.showToast("Não é possível salvar um nome vazio");
+    } else {
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      Map<String, dynamic> newData = {
+        DbData.COLUMN_NAME : _nameController.text
+      };
+
+      db.collection(DbData.TABLE_USER)
+          .doc(_idUser)
+          .update(newData)
+          .then((value) => {
+            Utils.showToast("Nome atualizado com sucesso!"),
+            success = true,
+            setState(() {
+              _name = _nameController.text;
+            }),
+          })
+          .catchError((error) => {
+            Utils.showToast("Falha ao atualizar o nome!!"),
+            print("@==================@" + error)
+          });
+
+      Navigator.pop(context);
+    }
   }
 }
