@@ -5,8 +5,8 @@ import 'package:projeto_whatsapp/Entity/eUser.dart';
 import 'package:projeto_whatsapp/Util/Utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'Constants/Routes.dart';
-import 'Styles/ButtonStyles.dart';
+import '../Constants/Routes.dart';
+import '../Styles/ButtonStyles.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projeto_whatsapp/Constants/cImages.dart';
@@ -35,7 +35,7 @@ class _PerfilState extends State<Perfil> {
   void initState() {
     super.initState();
 
-    _recuperarDadosUsuario();
+    _getUserLoggedData();
   }
 
   @override
@@ -336,7 +336,7 @@ class _PerfilState extends State<Perfil> {
       .update(data);
   }
 
-  _recuperarDadosUsuario() async {
+  _getUserLoggedData() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? usuarioLogado = await auth.currentUser;
     _idUser = usuarioLogado!.uid;
@@ -361,7 +361,7 @@ class _PerfilState extends State<Perfil> {
   }
 
   _getColumn(String str, Map data){
-    return !isNull(data[str]) ? data[str] : "";
+    return Utils.getColumn(str, data);
   }
 
   void _changeName() {
@@ -394,4 +394,5 @@ class _PerfilState extends State<Perfil> {
       Navigator.pop(context);
     }
   }
+
 }

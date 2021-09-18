@@ -124,4 +124,9 @@ class Utils{
     return str == null || str == "";
   }
 
+  static getColumn(String str, Map data){
+    return !isNull(data[str]) ? data[str] : "";
+  }
+
+
 }

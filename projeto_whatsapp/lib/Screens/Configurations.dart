@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'Constants/Routes.dart';
-import 'Constants/cConfigurations.dart';
-import 'Styles/IconsStyles.dart';
+import '../Constants/Routes.dart';
+import '../Constants/cConfigurations.dart';
+import '../Styles/IconsStyles.dart';
 
 
 class Configurations extends StatefulWidget {

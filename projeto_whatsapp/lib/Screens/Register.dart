@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:projeto_whatsapp/Constants/DbData.dart';
-import 'Constants/Routes.dart';
-import 'Entity/eUser.dart';
-import 'Styles/ButtonStyles.dart';
-import 'Util/Utils.dart';
+import '../Constants/Routes.dart';
+import '../Entity/eUser.dart';
+import '../Styles/ButtonStyles.dart';
+import '../Util/Utils.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);

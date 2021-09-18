@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'Constants/Routes.dart';
-import 'Entity/eUser.dart';
+import '../Constants/Routes.dart';
+import '../Entity/eUser.dart';
 import 'Home.dart';
-import 'Util/Utils.dart';
+import '../Util/Utils.dart';
 import 'Register.dart';
-import 'Styles/ButtonStyles.dart';
+import '../Styles/ButtonStyles.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

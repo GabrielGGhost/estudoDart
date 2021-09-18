@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_whatsapp/Login.dart';
-import 'package:projeto_whatsapp/Register.dart';
+import 'package:projeto_whatsapp/Screens/Login.dart';
+import 'package:projeto_whatsapp/Screens/Register.dart';
 import 'Configurations.dart';
-import 'Constants/Routes.dart';
+import '../Constants/Routes.dart';
 import 'Home.dart';
 import 'Perfil.dart';
-import 'Util/Utils.dart';
+import '../Util/Utils.dart';
 
 class RouteGenerator {
 
@@ -32,6 +32,10 @@ class RouteGenerator {
       case Routes.PERFIL :
         return MaterialPageRoute(
             builder: (_) => Perfil()
+        );
+      case Routes.CHAT :
+        return MaterialPageRoute(
+            builder: (_) => Chat()
         );
       default :
         _routeNotFound();

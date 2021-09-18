@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_whatsapp/Chamadas.dart';
+import 'package:projeto_whatsapp/Screens/Chamadas.dart';
 import 'package:projeto_whatsapp/Constants/Routes.dart';
-import 'package:projeto_whatsapp/Contatos.dart';
-import 'package:projeto_whatsapp/Conversas.dart';
+import 'package:projeto_whatsapp/Screens/Contacts.dart';
+import 'package:projeto_whatsapp/Screens/Conversas.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:projeto_whatsapp/Status.dart';
-import 'Constants/Menu.dart';
-import 'Util/Utils.dart';
+import 'package:projeto_whatsapp/Screens/Status.dart';
+import '../Constants/Menu.dart';
+import '../Util/Utils.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Contatos()
+                  builder: (context) => Contacts()
               )
           );
         },
