@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_whatsapp/Entity/eUser.dart';
 import 'package:projeto_whatsapp/Screens/Login.dart';
 import 'package:projeto_whatsapp/Screens/Register.dart';
+import 'Chat.dart';
 import 'Configurations.dart';
 import '../Constants/Routes.dart';
 import 'Home.dart';
@@ -10,6 +12,8 @@ import '../Util/Utils.dart';
 class RouteGenerator {
 
   static Route<dynamic>? generateRoute(RouteSettings set){
+
+    var args = set.arguments;
 
     switch(set.name){
       case Routes.INITIAL_ROUTE:
@@ -35,7 +39,7 @@ class RouteGenerator {
         );
       case Routes.CHAT :
         return MaterialPageRoute(
-            builder: (_) => Chat()
+            builder: (_) => Chat(args as eUser)
         );
       default :
         _routeNotFound();
